@@ -578,7 +578,7 @@ if(err){
  res.send(403);
 
 }else{
-			var query = pool.query("select * ,timediff('24:00:00',time_format(timediff(current_timestamp(),created_date) ,'%H:%i:%s')) as timecount from Create_group cg join customers cs on (cg.customer_id=cs.CustomerID) where payment_status='N' and no_multy='0'", function(err,rows){
+			var query = pool.query("select * ,Date_add(created_date, INTERVAL 1 DAY)  as  expirydate ,timediff('24:00:00',time_format(timediff(current_timestamp(),created_date) ,'%H:%i:%s')) as timecount from Create_group cg join customers cs on (cg.customer_id=cs.CustomerID) where payment_status='N' and no_multy='0'", function(err,rows){
 
 if(err){
         console.log("err"+err);
