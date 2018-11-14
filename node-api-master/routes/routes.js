@@ -26,7 +26,7 @@ const router = app => {
 	
 	
 	
-	app.post('/api/v1/login',function(req,res){
+	app.post('/api/v1/login_key',function(req,res){
 const user ={id:1};
 const token = jwt.sign({user},'molc')
 res.json({token:token})
