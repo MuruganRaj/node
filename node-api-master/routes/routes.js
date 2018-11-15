@@ -659,18 +659,63 @@ if(err){
 });
 
 
+app.post('/api/v1/addGroupJoin',function(req,res){
+   
+    var data={
+        "error":1,
+        "mjm":""
+    };
 
+  var pGroup_id = req.query.pGroup_id;
+var pCustomer_id = req.query.customer_id;
+var pJoin_status = req.query.pJoin_status;
+var pNo_multy = req.query.pNo_multy;
+var pPayment_status = req.query.pPayment_status;
+
+console.log('resu'+pGroup_id);
+
+     var connectionCount = 0;
+     connectionFunc();
+  function connectionFunc(){
+   pool.getConnection(function(err,connection){
+    if(connection!=undefined){
+    connection.query("Call sp_getcustomers('"+pGroup_id+"','"+pCustomer_id+"','"+pJoin_status+"','"+pNo_multy+"','"
+      +pPayment_status+"')",function(err,rows,fields){
+
+        connection.release();
+        if(!err){
+            res.json({code:1,message:'added'});
+        }else{
+            data["error"]=1;
+            data["users"]="not added";
+            res.json({code:0,message:'not added'+err});
+        }
+    })
+  }
+  else{
+    connectionCount++;
+      if(connectionCount<5){
+        connectionFunc();
+      }
+      else{
+        console.log("Mysql connection failed");
+        res.send("Mysql connection failed");
+      }
+  }
+  });
+ }
+});
 
 
 //not used
-app.get('/api/v1/getProductList',ensureToken,function(req,res){
+app.get('/api/v1/getProductList',function(req,res){
 
-        jwt.verify(req.token,'molc',function(err,data){
+//         jwt.verify(req.token,'molc',function(err,data){
 
-                if(err){
-             res.send(403);
+//                 if(err){
+//              res.send(403);
 
-        }else{
+//         }else{
 var query = pool.query("SELECT * FROM product_temp ",function(err,rows){
 
    if(err){
@@ -694,10 +739,10 @@ if(rows.length>0){
 
 	
 
-}
+// }
 });
 
-});
+// });
 
 
 
