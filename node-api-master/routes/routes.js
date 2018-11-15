@@ -658,6 +658,35 @@ if(err){
 		});
 });
 
+	app.get('/api/v1/getProductsById',ensureToken,function(req,res){
+		var product_id=req.query.product_id;
+        jwt.verify(req.token,'molc',function(err,data){
+
+if(err){
+        res.send(403);
+
+}else{
+        var query = pool.query('SELECT * from product_temp where product_id="'+product_id+'"',function(err,rows){
+
+if(err){
+        console.log("err"+err);
+
+}else{
+        if(rows.length>0){
+                res.send({"response":rows,
+                data:data})
+        }else{
+                res.send({"response":"No Data Found",data:data});
+        }
+}
+});
+
+}
+		});
+});
+
+	
+	
 
 app.post('/api/v1/addGroupJoin',function(req,res){
    
