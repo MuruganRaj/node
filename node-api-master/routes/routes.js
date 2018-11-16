@@ -658,14 +658,14 @@ if(err){
 		});
 });
 
-	app.get('/api/v1/getProductsById',ensureToken,function(req,res){
+	app.get('/api/v1/getProductsById',function(req,res){
 		var product_id=req.query.product_id;
-        jwt.verify(req.token,'molc',function(err,data){
+     //   jwt.verify(req.token,'molc',function(err,data){
 
-if(err){
-        res.send(403);
+//if(err){
+   //     res.send(403);
 
-}else{
+//}else{
         var query = pool.query('SELECT * from product_temp where product_id="'+product_id+'"',function(err,rows){
 
 if(err){
@@ -673,16 +673,15 @@ if(err){
 
 }else{
         if(rows.length>0){
-                res.send({"response":rows,
-                data:data})
+                res.send({"response":rows})
         }else{
-                res.send({"response":"No Data Found",data:data});
+                res.send({"response":"No Data Found"});
         }
 }
 });
 
-}
-		});
+//}
+		//});
 });
 
 	
