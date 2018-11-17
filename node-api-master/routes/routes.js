@@ -724,7 +724,7 @@ app.post('/api/v1/addGroupJoin',function(req,res){
     };
 
   var pGroup_id = req.query.pGroup_id;
-var pCustomer_id = req.query.customer_id;
+var pCustomer_id = req.query.pCustomer_id;
 var pJoin_status = req.query.pJoin_status;
 var pNo_multy = req.query.pNo_multy;
 var pPayment_status = req.query.pPayment_status;
