@@ -685,6 +685,35 @@ if(err){
 });
 
 	
+app.get('/api/v1/getGroupcount',ensureToken,function(req,res){
+        jwt.verify(req.token,'molc',function(err,data){
+
+if(err){
+ res.send(403);
+
+}else{
+        var query = pool.query("select count(group_id) as group_count from Create_group where payment_status ='N'",function(err,rows){
+
+if(err){
+        console.log("err"+err);
+
+}else{
+        if(rows.length>0){
+                res.send({"response":rows})
+        }else{
+                res.send({"response":"No Data Found"});
+        }
+}
+});
+
+}
+
+});
+
+
+
+});	
+	
 	
 
 app.post('/api/v1/addGroupJoin',function(req,res){
