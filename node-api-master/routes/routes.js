@@ -959,7 +959,45 @@ if(err){
 
 
 
+app.get('/api/v1/getJoinUserImages',ensureToken,function(req,res){
 
+        jwt.verify(req.token,'molc',function(err,data){
+			var group_id = req.query.group_id;
+
+			console.log('rrrreeeeee'+group_id);
+                if(err){
+             res.send(403);
+
+        }else{
+
+var query = pool.query('select c.ProfileImage from join_group j  join customers c on (j.customer_id=c.CustomerID) where group_id="'+group_id+'"',function(err,rows){
+
+
+   if(err){
+console.log("error"+err);
+
+}else{
+
+if(rows.length>0){
+        res.send({"response":rows,
+        data:data});
+
+}else{
+        res.send({"response":"No Data Found",data:data});
+
+}
+
+}
+
+
+});
+
+	
+
+}
+});
+
+});
 
 
 
