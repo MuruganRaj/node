@@ -924,6 +924,39 @@ if(err){
 });
 
 
+	app.get('/api/v1/getJoinUserStatusa',ensureToken,function(req,res){
+jwt.verify(req.token,'molc',function(err,data){
+	var group_id = req.query.group_id;
+	var customer_id = req.query.customer_id;
+	
+if(err){
+        res.sedStatus(403);
+}else{
+
+        var query=pool.query('select count(*) as usercount from join_group where group_id ="'+group_id+'" and customer_id ="'+customer_id+'"',function(err,rows){
+
+if(err){
+
+        res.send({"message":err});
+
+
+}else{
+
+        console.log("rrrrrr"+rows[0].usercount);
+		
+		var numRows = rows[0].usercount;
+        if(numRows>0){
+                        res.send({"message":true});
+
+        }else{
+                        res.send({"message":false});
+
+        }
+}
+});
+}});
+});
+
 
 
 
