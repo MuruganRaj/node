@@ -2,7 +2,8 @@
 const pool = require('../data/config');
 var jwt   = require('jsonwebtoken');
 var fs=require('fs');
-
+const path =require('path');
+var multer = require('multer');
 
 // Route the app
 const router = app => {
@@ -24,6 +25,65 @@ const router = app => {
 		
     });
 	
+	var upload = multer({ dest: '/images/'});
+
+
+app.get('/:filename',function(req,res){
+	var filename = req.params.filename;
+	
+	console.log(filename);
+	  fs.readFile(__dirname + '/'+filename, function (err, content) {
+        if (err) {
+            res.writeHead(400, {'Content-type':'text/html'})
+            console.log(err);
+            res.end("No such image");    
+        } else {
+            //specify the content type in the response will be an image
+            res.writeHead(200,{'Content-type':'image/jpg'});
+            res.end(content);
+        }
+    });
+});
+
+app.post('/file_upload', upload.single('file'), function(req, res) {
+  var file = __dirname + '/' + req.file.filename+".jpg";
+  
+  //console.log(req.file);
+  fs.rename(req.file.path, file, function(err) {
+    if (err) {
+      console.log(err);
+      res.send(500);
+    } else {
+	   var filename= req.file.filename;
+	   var file_extenstion= req.file.originalname;
+
+	   var file_ex=file_extenstion.split(".");
+	   var file_temp = file_ex[1];
+	   
+	   console.log('exteee'+file_temp);
+	   var FirstName = req.query.FirstName;
+	   var CustomerID = req.query.CustomerID;
+		var file ="http://18.224.1.148:3000/"+filename+"."+file_temp;
+				pool.query('update customers set ProfileImage="'+file+'" , FirstName="'+FirstName+'" where CustomerID="'+CustomerID+'"', 
+				 function(err) { 
+				if (err) {
+					res.status(500);
+					res.send(err);
+				}
+				else {
+					res.status(200);
+					//res.send({ status: "Success" });
+					 res.json({
+        message: 'File uploaded successfully',
+        filename: req.file.filename
+      });
+				 }
+				});
+     
+    }
+  });
+});
+
 	
 	
 	app.post('/api/v1/login_key',function(req,res){
