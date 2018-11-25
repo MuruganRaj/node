@@ -20,12 +20,11 @@ const router = app => {
 
             response.send(result);
         });
-		
-		
+				
 		
     });
 	
-	var upload = multer({ dest: '/images/'});
+	var upload = multer({ dest: 'images/'});
 
 
 app.get('/:filename',function(req,res){
@@ -45,7 +44,7 @@ app.get('/:filename',function(req,res){
     });
 });
 
-app.post('/file_upload', upload.single('recfile'), function(req, res) {
+app.post('/file_upload', upload.single('file'), function(req, res) {
   var file = __dirname + '/' + req.file.filename+".jpg";
   
   //console.log(req.file);
