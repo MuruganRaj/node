@@ -45,7 +45,7 @@ app.get('/:filename',function(req,res){
     });
 });
 
-app.post('/file_upload', upload.single('file'), function(req, res) {
+app.post('/file_upload', upload.single('recfile'), function(req, res) {
   var file = __dirname + '/' + req.file.filename+".jpg";
   
   //console.log(req.file);
