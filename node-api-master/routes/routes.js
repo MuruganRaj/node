@@ -43,7 +43,78 @@ app.get('/:filename',function(req,res){
         }
     });
 });
+app.post('/api/v1/updateProfile',upload.single('file'),function(req,res){
+   
+   var file = __dirname + '/' + req.file.filename+".jpg";
+  
+  //if(file!=null){
+  //console.log(req.file);
+  fs.rename(req.file.path, file, function(err) {
+    if (err) {
+      console.log(err);
+      res.send(500);
+    } else {
+	   var filename= req.file.filename;
+	   var file_extenstion= req.file.originalname;
 
+	   var file_ex=file_extenstion.split(".");
+	   var file_temp = file_ex[1];
+ var data={
+        "error":1,
+        "mjm":""
+    };
+	
+	//console.log('rrrrrrrr'+fileurl);
+
+ var sFirstName = req.query.sFirstName;
+var sLastName = req.query.sLastName;
+var sAddress1 = req.query.sAddress1;
+var sContactNo = req.query.sContactNo;
+var sEmailId = req.query.sEmailId;
+var sCustomerID = req.query.sCustomerID;
+//var sProfile_image=req.query.sProfile_image;
+
+     var connectionCount = 0;
+     connectionFunc();
+  function connectionFunc(){
+   pool.getConnection(function(err,connection){
+    if(connection!=undefined){
+		
+	 var   fileurl ="http://18.224.1.148:3000/"+filename+"."+file_temp;
+   // sProfile_image = fileurl;
+
+    connection.query("Call spUpdate_profile('"+sFirstName+"','"+sLastName+"','"+sAddress1+"','"
+      +sContactNo+"','"+fileurl+"','"+sEmailId+"','"+sCustomerID+"')",function(err,rows,fields){
+
+        connection.release();
+        if(!err){
+            res.json({code:1,message:rows[0]});
+        }else{
+            data["error"]=1;
+            data["users"]="not added";
+            res.json({code:0,message:'not added'+err});
+        }
+    })
+  }
+  else{
+    connectionCount++;
+      if(connectionCount<5){
+        connectionFunc();
+      }
+      else{
+        console.log("Mysql connection failed");
+        res.send("Mysql connection failed");
+      }
+  }
+  });
+ }
+ 
+	}
+   
+  });
+  
+ 
+});
 app.post('/file_upload', upload.single('file'), function(req, res) {
   var file = __dirname + '/' + req.file.filename+".jpg";
   
