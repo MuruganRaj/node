@@ -1109,11 +1109,10 @@ console.log("error"+err);
 }else{
 
 if(rows.length>0){
-        res.send({"response":rows,
-        data:data});
+        res.send({"response":rows});
 
 }else{
-        res.send({"response":"No Data Found",data:data});
+        res.send({"response":"No Data Found"});
 
 }
 
