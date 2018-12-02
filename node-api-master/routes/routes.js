@@ -704,12 +704,14 @@ if(err){
 
 app.get('/api/v1/getGroups',ensureToken,function(req,res){
         jwt.verify(req.token,'molc',function(err,data){
+		
+		var productlink = req.query.productlink;
 
 if(err){
  res.send(403);
 
 }else{
-			var query = pool.query("select * ,Date_add(created_date, INTERVAL 1 DAY)  as  expirydate ,timediff('24:00:00',time_format(timediff(current_timestamp(),created_date) ,'%H:%i:%s')) as timecount from Create_group cg join customers cs on (cg.customer_id=cs.CustomerID) where payment_status='N' and no_multy='0' and group_status = 'Active'  order by group_id desc", function(err,rows){
+			var query = pool.query("select * ,Date_add(created_date, INTERVAL 1 DAY)  as  expirydate ,timediff('24:00:00',time_format(timediff(current_timestamp(),created_date) ,'%H:%i:%s')) as timecount from Create_group cg join customers cs on (cg.customer_id=cs.CustomerID) where payment_status='N' and no_multy='0' and group_status = 'Active' and productlink= "'+productlink+'" order by group_id desc", function(err,rows){
 
 if(err){
         console.log("err"+err);
