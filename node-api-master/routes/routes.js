@@ -794,12 +794,14 @@ if(err){
 	
 app.get('/api/v1/getGroupcount',ensureToken,function(req,res){
         jwt.verify(req.token,'molc',function(err,data){
+var product_id = req.query.product_id;
+		
 
 if(err){
  res.send(403);
 
 }else{
-        var query = pool.query("select count(group_id) as group_count from Create_group where payment_status ='N' and group_status ='Active' ",function(err,rows){
+        var query = pool.query("select count(group_id) as group_count from Create_group where payment_status ='N' and group_status ='Active'  and product_id ="'+product_id+'"",function(err,rows){
 
 if(err){
         console.log("err"+err);
