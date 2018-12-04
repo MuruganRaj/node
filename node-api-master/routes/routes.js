@@ -801,7 +801,7 @@ if(err){
  res.send(403);
 
 }else{
-        var query = pool.query("select count(group_id) as group_count from Create_group where payment_status ='N' and group_status ='Active'  and product_id ="'+product_id+'"",function(err,rows){
+        var query = pool.query("select count(group_id) as group_count from Create_group where payment_status ='N' and group_status ='Active'  and product_id ='"+product_id+"' ",function(err,rows){
 
 if(err){
         console.log("err"+err);
