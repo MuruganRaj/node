@@ -1008,7 +1008,7 @@ if(err){
         res.send(403);
 
 }else{
-        var query = pool.query('SELECT * from product_new where supplier_id="'+supplier_id+'"',function(err,rows){
+        var query = pool.query('SELECT p.*, s.subcat_name as subcategory_name ,c.category_name as category_name from product_new p join category c on (c.category_id=p.category_id) join subcategory s on (s.subcat_id = p.subcategory_id) where supplier_id="'+supplier_id+'"',function(err,rows){
 
 if(err){
         console.log("err"+err);
@@ -1039,7 +1039,7 @@ if(err){
         res.send(403);
 
 }else{
-        var query = pool.query('SELECT * from product_new where category_id="'+category_id+'" and subcategory_id ="'+subcategory_id+'" ',function(err,rows){
+        var query = pool.query('SELECT p.*, s.subcat_name as subcategory_name ,c.category_name as category_name from product_new p join category c on (c.category_id=p.category_id) join subcategory s on (s.subcat_id = p.subcategory_id) where   p.category_id="'+category_id+'" and p.subcategory_id ="'+subcategory_id+'" ',function(err,rows){
 
 if(err){
         console.log("err"+err);
