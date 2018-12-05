@@ -447,6 +447,40 @@ if(err){
 }});
 });
 
+	
+	app.get('/api/v1/updateAddress1',ensureToken,function(req,res){
+		    const FirstName = req.query.FirstName;
+		    const BillingContactNo = req.query.BillingContactNo;
+		    const EmailID = req.query.EmailID;
+		    const Address1 = req.query.Address1;
+		    const BillingAddress = req.query.BillingAddress;
+		    const Billingcountry = req.query.Billingcountry;
+		    const BillingPostalCode = req.query.BillingPostalCode;
+		    const ShipAddress = req.query.ShipAddress;
+		    const ShipCity = req.query.ShipCity;
+		    const ShipPostalCode = req.query.ShipPostalCode;
+		    const CustomerID = req.query.CustomerID;
+
+jwt.verify(req.token,'molc',function(err,data){
+if(err){
+        res.sedStatus(403);
+}else{
+
+        var query=pool.query('update customers set FirstName="'+FirstName+'",BillingContactNo="'+BillingContactNo+'",EmailID ="'+EmailID+'",Address1="'+Address1+'",BillingAddress="'+BillingAddress+'",Billingcountry="'+Billingcountry+'",BillingPostalCode="'+BillingPostalCode+'",ShipAddress="'+ShipAddress+'",ShipCity="'+ShipCity+'",ShipPostalCode= "'+ShipPostalCode+'" where CustomerID="'+CustomerID+'"',function(err,rows){
+
+if(err){
+        res.json({status:400,message:err})
+}else{
+
+        res.json({status:200,message:'User updated successfully.'})
+
+}
+});
+}});
+});
+
+	
+	
 
 
 
