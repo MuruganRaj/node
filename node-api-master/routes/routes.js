@@ -1134,13 +1134,13 @@ if(rows.length>0){
 
 app.get('/api/v1/getProductsku',ensureToken,function(req,res){
         jwt.verify(req.token,'molc',function(err,data){
-			var sku_id = req.query.sku_id;
+			var product_id = req.query.product_id;
 
 if(err){
  res.send(403);
 
 }else{
-        var query = pool.query("select p.*,s.name as psize,c.name as pcolor from product_sku  p join color c on (p.product_color=c.id) join size s on (p.product_size=s.id) where sku_id  ='"+sku_id+"'",function(err,rows){
+        var query = pool.query("SELECT * FROM product_sku where product_id="'+product_id+'"",function(err,rows){
 
 if(err){
         console.log("err"+err);
