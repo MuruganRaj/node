@@ -773,7 +773,33 @@ if(err){
    //     res.send(403);
 
 //}else{
-        var query = pool.query('SELECT * from product_new where product_id="'+product_id+'"',function(err,rows){
+        var query = pool.query('
+app.get('/api/v1/getProducts',ensureToken,function(req,res){
+        jwt.verify(req.token,'molc',function(err,data){
+
+if(err){
+        res.send(403);
+
+}else{
+        var query = pool.query('SELECT SELECT p.*, s.subcat_name as subcategory_name ,c.category_name as category_name from product_new p join category c on (c.category_id=p.category_id) join subcategory s on (s.subcat_id = p.subcategory_id) from p.product_new',function(err,rows){
+
+if(err){
+        console.log("err"+err);
+
+}else{
+        if(rows.length>0){
+                res.send({"response":rows,
+                data:data})
+        }else{
+                res.send({"response":"No Data Found",data:data});
+        }
+}
+});
+
+}
+		});
+});
+ where product_id="'+product_id+'"',function(err,rows){
 
 if(err){
         console.log("err"+err);
@@ -882,7 +908,33 @@ app.get('/api/v1/getProductList',function(req,res){
 //              res.send(403);
 
 //         }else{
-var query = pool.query("SELECT * FROM product_new ",function(err,rows){
+var query = pool.query("
+app.get('/api/v1/getProducts',ensureToken,function(req,res){
+        jwt.verify(req.token,'molc',function(err,data){
+
+if(err){
+        res.send(403);
+
+}else{
+        var query = pool.query('SELECT SELECT p.*, s.subcat_name as subcategory_name ,c.category_name as category_name from product_new p join category c on (c.category_id=p.category_id) join subcategory s on (s.subcat_id = p.subcategory_id) from product_new',function(err,rows){
+
+if(err){
+        console.log("err"+err);
+
+}else{
+        if(rows.length>0){
+                res.send({"response":rows,
+                data:data})
+        }else{
+                res.send({"response":"No Data Found",data:data});
+        }
+}
+});
+
+}
+		});
+});
+ FROM product_new ",function(err,rows){
 
    if(err){
 console.log("error"+err);
