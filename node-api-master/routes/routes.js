@@ -1,3 +1,4 @@
+
 // Load the MySQL pool connection
 const pool = require('../data/config');
 var jwt   = require('jsonwebtoken');
@@ -394,7 +395,6 @@ app.post('/api/v1/addUserByMobile',ensureToken,function(req,res){
 
 
         /*
-
         var LoginType = req.body.LoginType;
         var FirstName  = req.body.FirstName;
         var EmailID = req.body.EmailID;
@@ -746,7 +746,7 @@ if(err){
         res.send(403);
 
 }else{
-        var query = pool.query('SELECT * from product_temp',function(err,rows){
+        var query = pool.query('SELECT * from product_new',function(err,rows){
 
 if(err){
         console.log("err"+err);
@@ -773,7 +773,7 @@ if(err){
    //     res.send(403);
 
 //}else{
-        var query = pool.query('SELECT * from product_temp where product_id="'+product_id+'"',function(err,rows){
+        var query = pool.query('SELECT * from product_new where product_id="'+product_id+'"',function(err,rows){
 
 if(err){
         console.log("err"+err);
@@ -882,7 +882,7 @@ app.get('/api/v1/getProductList',function(req,res){
 //              res.send(403);
 
 //         }else{
-var query = pool.query("SELECT * FROM product_temp ",function(err,rows){
+var query = pool.query("SELECT * FROM product_new ",function(err,rows){
 
    if(err){
 console.log("error"+err);
@@ -1008,7 +1008,7 @@ if(err){
         res.send(403);
 
 }else{
-        var query = pool.query('SELECT * from product_temp where supplier_id="'+supplier_id+'"',function(err,rows){
+        var query = pool.query('SELECT * from product_new where supplier_id="'+supplier_id+'"',function(err,rows){
 
 if(err){
         console.log("err"+err);
@@ -1039,7 +1039,7 @@ if(err){
         res.send(403);
 
 }else{
-        var query = pool.query('SELECT * from product_temp where category_id="'+category_id+'" and subcategory_id ="'+subcategory_id+'" ',function(err,rows){
+        var query = pool.query('SELECT * from product_new where category_id="'+category_id+'" and subcategory_id ="'+subcategory_id+'" ',function(err,rows){
 
 if(err){
         console.log("err"+err);
