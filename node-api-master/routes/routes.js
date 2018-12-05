@@ -1140,7 +1140,7 @@ if(err){
  res.send(403);
 
 }else{
-        var query = pool.query("SELECT * FROM product_sku where product_id="'+product_id+'"",function(err,rows){
+        var query = pool.query("SELECT * FROM product_sku where product_id='"+product_id+"'",function(err,rows){
 
 if(err){
         console.log("err"+err);
