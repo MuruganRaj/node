@@ -940,6 +940,49 @@ if(rows.length>0){
 });
 
 // });
+	
+	
+	
+	app.get('/api/v1/getProductListByCategory',function(req,res){
+
+		var category_id =req.query.category_id;
+		
+//         jwt.verify(req.token,'molc',function(err,data){
+
+//                 if(err){
+//              res.send(403);
+
+//         }else{
+var query = pool.query("SELECT * FROM product_temp  where category_id='"+category_id+"' ",function(err,rows){
+
+   if(err){
+console.log("error"+err);
+
+}else{
+
+if(rows.length>0){
+        res.send({"response":rows});
+
+}else{
+        res.send({"response":"No Data Found"});
+
+}
+
+}
+
+
+});
+
+	
+
+// }
+});
+
+	
+	
+	
+	
+	
 
 
 app.get('/api/v1/getProductList_new',ensureToken,function(req,res){
