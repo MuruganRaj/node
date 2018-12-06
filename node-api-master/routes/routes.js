@@ -1174,7 +1174,7 @@ if(err){
  res.send(403);
 
 }else{
-        var query = pool.query("SELECT * FROM product_sku where product_id='"+product_id+"'",function(err,rows){
+        var query = pool.query("SELECT pt.product_name,ps.* FROM product_sku  ps join product_temp pt on (ps.product_id=pt.product_id) where ps.product_id='"+product_id+"'",function(err,rows){
 
 if(err){
         console.log("err"+err);
