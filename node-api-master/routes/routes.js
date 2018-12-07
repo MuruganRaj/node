@@ -853,6 +853,91 @@ if(err){
 
 
 
+app.get('/api/v1/getProductByType',function(req,res){
+   
+    var data={
+        "error":1,
+        "mjm":""
+    };
+
+  var sType = req.query.sType;
+var sCategoryId = req.query.sCategoryId;
+
+
+     var connectionCount = 0;
+     connectionFunc();
+  function connectionFunc(){
+   pool.getConnection(function(err,connection){
+    if(connection!=undefined){
+    connection.query("Call spGetProduct('"+sType+"','"+sCategoryId+"')",function(err,rows,fields){
+
+        connection.release();
+        if(!err){
+            res.json({code:1,message:rows});
+        }else{
+            data["error"]=1;
+            data["users"]="not added";
+            res.json({code:0,message:'not added'+err});
+        }
+    })
+  }
+  else{
+    connectionCount++;
+      if(connectionCount<5){
+        connectionFunc();
+      }
+      else{
+        console.log("Mysql connection failed");
+        res.send("Mysql connection failed");
+      }
+  }
+  });
+ }
+});
+
+
+app.get('/api/v1/getOrder_id',function(req,res){
+   
+    var data={
+        "error":1,
+        "mjm":""
+    };
+
+  
+
+     var connectionCount = 0;
+     connectionFunc();
+  function connectionFunc(){
+   pool.getConnection(function(err,connection){
+    if(connection!=undefined){
+    connection.query("Call sp_orderid()",function(err,rows,fields){
+
+        connection.release();
+        if(!err){
+            res.json({code:1,message:rows[0]});
+        }else{
+            data["error"]=1;
+            data["users"]="not added";
+            res.json({code:0,message:'not added'+err});
+        }
+    })
+  }
+  else{
+    connectionCount++;
+      if(connectionCount<5){
+        connectionFunc();
+      }
+      else{
+        console.log("Mysql connection failed");
+        res.send("Mysql connection failed");
+      }
+  }
+  });
+ }
+});
+
+
+
 
 
 app.get('/api/v1/getProducts',ensureToken,function(req,res){
