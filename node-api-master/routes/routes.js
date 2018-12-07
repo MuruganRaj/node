@@ -850,6 +850,72 @@ if(err){
 
 });
 
+app.get('/api/v1/getReviewById',ensureToken,function(req,res){
+        jwt.verify(req.token,'molc',function(err,data){
+		
+		var customer_id = req.query.customer_id;
+
+if(err){
+ res.send(403);
+
+}else{
+			var query = pool.query("SELECT * FROM product_review where customer_id='"+customer_id+"';", function(err,rows){
+
+if(err){
+        console.log("err"+err);
+
+}else{
+        if(rows.length>0){
+                res.send({"response":rows})
+        }else{
+                res.send({"response":"No Data Found"});
+        }
+}
+});
+
+}
+
+});
+
+
+
+});
+
+app.get('/api/v1/getOrdersById',ensureToken,function(req,res){
+        jwt.verify(req.token,'molc',function(err,data){
+		
+		var sCustomerid = req.query.sCustomerid;
+		var sOrder_status_id = req.query.sOrder_status_id;
+
+if(err){
+ res.send(403);
+
+}else{
+			var query = pool.query("Call spOrderDetails('"+sOrder_status_id+"','"+sCustomerid+"')", function(err,rows){
+
+if(err){
+        console.log("err"+err);
+
+}else{
+        if(rows.length>0){
+                res.send({"response":rows[0]})
+                //data:data})
+        }else{
+                res.send({"response":"No Data Found"});
+        }
+}
+});
+
+}
+
+});
+
+
+
+});
+
+
+
 
 
 
