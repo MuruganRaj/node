@@ -701,7 +701,9 @@ if(err){
 
 });
 
-app.post('/api/v1/placeOrder',function(req,res){
+
+
+app.post('/api/v1/placeOrder',upload.single('file'),function(req,res){
    
    
    jwt.verify(req.token,'molc',function(err,data){
@@ -715,20 +717,15 @@ app.post('/api/v1/placeOrder',function(req,res){
 
  var sCustomer_id = req.query.sCustomer_id;
 var sPayment_method_code = req.query.sPayment_method_code;
-var sCredit_card_no = req.query.sCredit_card_no;
 var sPayment_method_details = req.query.sPayment_method_details;
 var sTotal_price = req.query.sTotal_price;
 var sProduct_price = req.query.sProduct_price;
-var sTransaction_cost = req.query.sTransaction_cost;
 var sOrder_id = req.query.sOrder_id;
 var sQuantity = req.query.sQuantity;
 var sOrderStatus = req.query.sOrderStatus;
 var sOrderInvoice = req.query.sOrderInvoice;
 var sProductId = req.query.sProductId;
-var sRef_orderId = req.query.sRef_orderId;
 var sMolc_sku_id = req.query.sMolc_sku_id;
-var sPayType = req.query.sPayType;
-var sGroupid = req.query.sGroupid;
 var sPaymentStatus = req.query.sPaymentStatus;
 var pSno = req.query.pSno;
 var sSuplier_id = req.query.sSuplier_id;
@@ -751,8 +748,8 @@ var data={
    // sProfile_image = fileurl;
 
 
-    connection.query("Call place_orders('"+sCustomer_id+"','"+sPayment_method_code+"','"+sCredit_card_no+"','"
-      +sPayment_method_details+"','"+sTotal_price+"','"+sProduct_price+"','"+sTransaction_cost+"','"+sOrder_id+"','"+sQuantity+"', '"+sOrderStatus+"','"+sOrderInvoice+"','"+sProductId+"','"+sRef_orderId+"','"+sMolc_sku_id+"','"+sPayType+"','"+sGroupid+"','"+sPaymentStatus+"','"+pSno+"',	  '"+sSuplier_id+"','"+sTransactionId+"')",function(err,rows,fields){
+    connection.query("Call place_orders('"+sCustomer_id+"','"+sPayment_method_code+"','"
+      +sPayment_method_details+"','"+sTotal_price+"','"+sProduct_price+"','"+sOrder_id+"','"+sQuantity+"', '"+sOrderStatus+"','"+sOrderInvoice+"','"+sProductId+"','"+sOrder_id+"','"+sMolc_sku_id+"','"+sPaymentStatus+"','"+pSno+"',	  '"+sSuplier_id+"','"+sTransactionId+"')",function(err,rows,fields){
    
         connection.release();
         if(!err){
