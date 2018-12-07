@@ -701,7 +701,91 @@ if(err){
 
 });
 
+app.post('/api/v1/placeOrder',upload.single('file'),function(req,res){
+   
+   
+   jwt.verify(req.token,'molc',function(err,data){
 
+                if(err){
+                        console.log('rrrrrrrr'+err);
+             res.sendStatus(403);
+
+        }else{
+	//console.log('rrrrrrrr'+fileurl);
+
+ var sCustomer_id = req.query.sCustomer_id;
+var sPayment_method_code = req.query.sPayment_method_code;
+var sCredit_card_no = req.query.sCredit_card_no;
+var sPayment_method_details = req.query.sPayment_method_details;
+var sTotal_price = req.query.sTotal_price;
+var sProduct_price = req.query.sProduct_price;
+var sTransaction_cost = req.query.sTransaction_cost;
+var sOrder_id = req.query.sOrder_id;
+var sQuantity = req.query.sQuantity;
+var sOrderStatus = req.query.sOrderStatus;
+var sOrderInvoice = req.query.sOrderInvoice;
+var sProductId = req.query.sProductId;
+var sRef_orderId = req.query.sRef_orderId;
+var sMolc_sku_id = req.query.sMolc_sku_id;
+var sPayType = req.query.sPayType;
+var sGroupid = req.query.sGroupid;
+var sPaymentStatus = req.query.sPaymentStatus;
+var pSno = req.query.pSno;
+var sSuplier_id = req.query.sSuplier_id;
+var sTransactionId = req.query.sTransactionId;
+
+
+
+
+var data={
+        "error":1,
+        "mjm":""
+    };
+
+     var connectionCount = 0;
+     connectionFunc();
+  function connectionFunc(){
+   pool.getConnection(function(err,connection){
+    if(connection!=undefined){
+		
+   // sProfile_image = fileurl;
+
+
+    connection.query("Call place_orders('"+sCustomer_id+"','"+sPayment_method_code+"','"+sCredit_card_no+"','"
+      +sPayment_method_details+"','"+sTotal_price+"','"+sProduct_price+"','"+sTransaction_cost+"','"+sOrder_id+"','"+sQuantity+"', '"+sOrderStatus+"','"+sOrderInvoice+"','"+sProductId+"','"+sRef_orderId+"','"+sMolc_sku_id+"','"+sPayType+"','"+sGroupid+"','"+sPaymentStatus+"','"+pSno+"',	  '"+sSuplier_id+"','"+sTransactionId+"')",function(err,rows,fields){
+   
+        connection.release();
+        if(!err){
+            res.json({code:1,message:rows[0]});
+        }else{
+            data["error"]=1;
+            data["users"]="not added";
+            res.json({code:0,message:'not added'+err});
+        }
+    })
+  }
+  else{
+    connectionCount++;
+      if(connectionCount<5){
+        connectionFunc();
+      }
+      else{
+        console.log("Mysql connection failed");
+        res.send("Mysql connection failed");
+      }
+  }
+  });
+ 
+  }
+	
+ }
+});
+});
+
+
+
+
+	
 
 app.get('/api/v1/getProductImages',ensureToken,function(req,res){
         jwt.verify(req.token,'molc',function(err,data){
