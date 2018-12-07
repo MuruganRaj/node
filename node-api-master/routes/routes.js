@@ -873,7 +873,7 @@ var sCategoryId = req.query.sCategoryId;
 
         connection.release();
         if(!err){
-            res.json({code:1,message:rows});
+            res.json({code:1,message:rows[0]});
         }else{
             data["error"]=1;
             data["users"]="not added";
