@@ -703,7 +703,7 @@ if(err){
 
 
 
-app.post('/api/v1/placeOrder',upload.single('file'),function(req,res){
+app.post('/api/v1/placeOrder',function(req,res){
    
    
    jwt.verify(req.token,'molc',function(err,data){
