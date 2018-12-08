@@ -706,13 +706,7 @@ if(err){
 app.post('/api/v1/placeOrder',function(req,res){
    
    
-   jwt.verify(req.token,'molc',function(err,data){
-
-                if(err){
-                        console.log('rrrrrrrr'+err);
-             res.sendStatus(403);
-
-        }else{
+  
 	//console.log('rrrrrrrr'+fileurl);
 
  var sCustomer_id = req.query.sCustomer_id;
@@ -731,9 +725,6 @@ var pSno = req.query.pSno;
 var sSuplier_id = req.query.sSuplier_id;
 var sTransactionId = req.query.sTransactionId;
 
-
-
-
 var data={
         "error":1,
         "mjm":""
@@ -749,7 +740,7 @@ var data={
 
 
     connection.query("Call place_orders('"+sCustomer_id+"','"+sPayment_method_code+"','"
-      +sPayment_method_details+"','"+sTotal_price+"','"+sProduct_price+"','"+sOrder_id+"','"+sQuantity+"', '"+sOrderStatus+"','"+sOrderInvoice+"','"+sProductId+"','"+sOrder_id+"','"+sMolc_sku_id+"','"+sPaymentStatus+"','"+pSno+"',	  '"+sSuplier_id+"','"+sTransactionId+"')",function(err,rows,fields){
+      +sPayment_method_details+"','"+sTotal_price+"','"+sProduct_price+"','"+sOrder_id+"','"+sQuantity+"', '"+sOrderStatus+"','"+sOrderInvoice+"', '"+sProductId+"','"+sMolc_sku_id+"','"+sPaymentStatus+"','"+pSno+"','"+sSuplier_id+"','"+sTransactionId+"')",function(err,rows,fields){
    
         connection.release();
         if(!err){
@@ -775,9 +766,7 @@ var data={
  
   }
 	
- }
-});
-});
+ });
 
 
 
