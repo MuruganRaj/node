@@ -257,6 +257,48 @@ if(err){
 
 });
 
+app.get('/api/v1/getProductByGroupID',ensureToken,function(req,res){
+
+var group_id = req.query.group_id;
+
+jwt.verify(req.token,'molc',function(err,data){
+
+                if(err){
+                        console.log('rrrrrrrr'+err);
+             res.sendStatus(403);
+
+        }else{
+// req.assert('contactno','ContactNo required').notEmpty();
+
+// var error = re.validationErrors();
+// if(!error){
+
+var query = pool.query("select * from product_temp pt join Create_group cg on (pt.product_id =cg.product_id) where cg.group_id="+group_id,function(err,rows){
+
+   if(err){
+console.log("error"+err);
+
+}else{
+
+if(rows.length>0){
+        res.send({"response":rows});
+
+}else{
+        res.send({"response":"No Data Found"});
+
+}
+
+}
+
+
+});
+
+}
+});
+});	
+	
+	
+	
 
 app.get('/api/v1/loginByMobileNo',ensureToken,function(req,res){
 
