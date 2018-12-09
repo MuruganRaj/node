@@ -178,16 +178,17 @@ res.json({token:token})
 
 	
 	
-	app.get('/api/v1/getGroupsById',function(req,res){
-        jwt.verify(req.token,'molc',function(err,data){
-		
-		var productlink = req.query.productlink;
-		var group_id = req.query.group_id;
-
-if(err){
+	pp.get('/api/v1/getGroupsById',ensureToken,function(req,res){
+       jwt.verify(req.token,'molc',function(err,data){
+	
+	
+	if(err){
  res.send(403);
 
 }else{
+		var productlink = req.query.productlink;
+		var group_id = req.query.group_id;
+
 			var query = pool.query("select * ,ADDTIME(created_date, '29:30:00')  as  expirydate ,timediff('24:00:00',time_format(timediff(current_timestamp(),created_date) ,'%H:%i:%s')) as timecount from Create_group cg join customers cs on (cg.customer_id=cs.CustomerID) where payment_status='N' and no_multy='0' and group_status = 'Active' and productlink= '"+productlink+"' and group_id ='"+group_id+"' order by group_id desc", function(err,rows){
 
 if(err){
@@ -195,10 +196,9 @@ if(err){
 
 }else{
         if(rows.length>0){
-                res.send({"response":rows,
-                data:data})
+                res.send({"response":rows})
         }else{
-                res.send({"response":"No Data Found",data:data});
+                res.send({"response":"No Data Found"});
         }
 }
 });
