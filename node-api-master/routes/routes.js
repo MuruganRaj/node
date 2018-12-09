@@ -178,7 +178,7 @@ res.json({token:token})
 
 	
 	
-	app.get('/api/v1/getGroupsById',ensureToken,function(req,res){
+	app.get('/api/v1/getGroupsById',function(req,res){
         jwt.verify(req.token,'molc',function(err,data){
 		
 		var productlink = req.query.productlink;
