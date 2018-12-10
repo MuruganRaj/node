@@ -1211,7 +1211,7 @@ app.get('/api/v1/getProductList',function(req,res){
 //              res.send(403);
 
 //         }else{
-var query = pool.query("SELECT * FROM product_temp ",function(err,rows){
+var query = pool.query("SELECT * FROM product_temp  ORDER BY RAND()",function(err,rows){
 
    if(err){
 console.log("error"+err);
