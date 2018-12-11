@@ -1280,7 +1280,48 @@ if(rows.length>0){
 	
 	
 	
+app.get('/api/v1/getWalletBal',function(req,res){
+   
+    var data={
+        "error":1,
+        "mjm":""
+    };
 
+	var sType = req.query.sType;
+	var sUserid = req.query.sUserid;
+	var sWalletamt  =req.query.sWalletamt;
+  
+
+     var connectionCount = 0;
+     connectionFunc();
+  function connectionFunc(){
+   pool.getConnection(function(err,connection){
+    if(connection!=undefined){
+    connection.query("call spWalletRecharge('"+sType+"',"+sUserid+", "+sWalletamt+")",function(err,rows,fields){
+
+        connection.release();
+        if(!err){
+            res.json({code:1,message:rows[0]});
+        }else{
+            data["error"]=1;
+            data["users"]="not added";
+            res.json({code:0,message:'not added'+err});
+        }
+    })
+  }
+  else{
+    connectionCount++;
+      if(connectionCount<5){
+        connectionFunc();
+      }
+      else{
+        console.log("Mysql connection failed");
+        res.send("Mysql connection failed");
+      }
+  }
+  });
+ }
+});
 
 app.get('/api/v1/getProductList_new',ensureToken,function(req,res){
 
