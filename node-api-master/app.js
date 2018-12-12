@@ -30,9 +30,9 @@ app.get('/images/:file', function (req, res) {
     })
 
 
-// // Start the server
-// const server = app.listen(port, () => {
-//     console.log(`App running on port ${server.address().port}`);
-// });
+// Start the server
+const server = app.listen(port, () => {
+    console.log(`App running on port ${server.address().port}`);
+});
 
-https.createServer(app).listen(port);
+// https.createServer(app).listen(port);
