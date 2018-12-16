@@ -292,7 +292,9 @@ if(err){
 });
 
 	
-	app.get('/api/v1/getPendingRegStatus',ensureToken,function(req,res){
+	
+
+app.get('/api/v1/getPendingRegStatus',ensureToken,function(req,res){
 jwt.verify(req.token,'molc',function(err,data){
 	var ContactNo = req.query.ContactNo;
 	
@@ -300,7 +302,7 @@ if(err){
         res.sedStatus(403);
 }else{
 
-        var query=pool.query('SELECT count(*) from customers where step_status="1" and ContactNo="'+ContactNo+'"',function(err,rows){
+        var query=pool.query('SELECT count(*) as usercount from customers  where step_status="1" and ContactNo="'+ContactNo+'"',function(err,rows){
 
 if(err){
 
@@ -323,6 +325,9 @@ if(err){
 });
 }});
 });
+
+
+
 	
 	
 app.get('/api/v1/getProductByGroupID',ensureToken,function(req,res){
