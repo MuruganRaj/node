@@ -291,6 +291,40 @@ if(err){
 
 });
 
+	
+	app.get('/api/v1/getPendingRegStatus',ensureToken,function(req,res){
+jwt.verify(req.token,'molc',function(err,data){
+	var ContactNo = req.query.ContactNo;
+	
+if(err){
+        res.sedStatus(403);
+}else{
+
+        var query=pool.query('SELECT count(*) from customers where step_status="1" and ContactNo="'+ContactNo+'"',function(err,rows){
+
+if(err){
+
+        res.send({"message":err});
+
+
+}else{
+
+        console.log("rrrrrr"+rows[0].usercount);
+		
+		var numRows = rows[0].usercount;
+        if(numRows>0){
+                        res.send({"message":true});
+
+        }else{
+                        res.send({"message":false});
+
+        }
+}
+});
+}});
+});
+	
+	
 app.get('/api/v1/getProductByGroupID',ensureToken,function(req,res){
 
 var group_id = req.query.group_id;
