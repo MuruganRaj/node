@@ -507,7 +507,7 @@ if(err){
 app.post('/api/v1/addGroup',ensureToken,function(req,res){
 jwt.verify(req.token,'molc',function(err,data){
 if(err){
-        res.sedStatus(403);
+        res.send(403);
 }else{
 
         var query=pool.query('insert  Create_group set ?',req.body,function(err,rows){
@@ -539,7 +539,7 @@ if(err){
 
 jwt.verify(req.token,'molc',function(err,data){
 if(err){
-        res.sedStatus(403);
+        res.send(403);
 }else{
 
         var query=pool.query('update customers set FirstName="'+FirstName+'",BillingContactNo="'+BillingContactNo+'",EmailID ="'+EmailID+'",Address1="'+Address1+'",BillingAddress="'+BillingAddress+'",Billingcountry="'+Billingcountry+'",BillingPostalCode="'+BillingPostalCode+'",ShipAddress="'+ShipAddress+'",ShipCity="'+ShipCity+'",ShipPostalCode= "'+ShipPostalCode+'" where CustomerID="'+CustomerID+'"',function(err,rows){
@@ -566,7 +566,7 @@ if(err){
 
 jwt.verify(req.token,'molc',function(err,data){
 if(err){
-        res.sedStatus(403);
+        res.send(403);
 }else{
 
         var query=pool.query('update customers set FirstName="'+FirstName+'", EmailID="'+EmailID+'",loginType=FB,ProfileImage="'+ProfileImage+'",step_status=2 where ContactNo="'+ContactNo+'"',function(err,rows){
