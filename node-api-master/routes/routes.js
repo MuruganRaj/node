@@ -569,7 +569,7 @@ if(err){
         res.sedStatus(403);
 }else{
 
-        var query=pool.query('update customers set FirstName="'+FirstName+'", EmailID="'+EmailID+'",loginType='FB',ProfileImage="'+ProfileImage+'",step_status='2' where ContactNo="'+ContactNo+'";
+        var query=pool.query('update customers set FirstName="'+FirstName+'", EmailID="'+EmailID+'",loginType='FB',ProfileImage="'+ProfileImage+'",step_status='2' where ContactNo="'+ContactNo+'"
 ',function(err,rows){
 
 if(err){
