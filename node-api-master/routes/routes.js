@@ -558,6 +558,30 @@ if(err){
 	
 	
 
+	app.get('/api/v1/updateFBChallenge',ensureToken,function(req,res){
+		    const FirstName = req.query.FirstName;
+		    const EmailID = req.query.EmailID;
+		    const ContactNo = req.query.ContactNo;
+		   const ProfileImage =req.query.ProfileImage;
+
+jwt.verify(req.token,'molc',function(err,data){
+if(err){
+        res.sedStatus(403);
+}else{
+
+        var query=pool.query('update customers set FirstName="'+FirstName+'", EmailID="'+EmailID+'",loginType='FB',ProfileImage="'+ProfileImage+'",step_status='2' where ContactNo="'+ContactNo+'";
+',function(err,rows){
+
+if(err){
+        res.json({status:400,message:err})
+}else{
+
+        res.json({status:200,message:'User updated successfully.'})
+
+}
+});
+}});
+});
 
 
 const util = require('util');
