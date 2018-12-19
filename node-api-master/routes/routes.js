@@ -602,10 +602,11 @@ if(err){
 		    const EmailID = req.query.EmailID;
 		    const ContactNo = req.query.ContactNo;
 		   const ProfileImage =req.query.ProfileImage;
+		   const fuserid =req.query.fuserid;
 
 
 
-        var query=pool.query('update customers set FirstName="'+FirstName+'", EmailID="'+EmailID+'",loginType="FB",ProfileImage="'+ProfileImage+'",step_status=2 where ContactNo="'+ContactNo+'"',function(err,rows){
+        var query=pool.query('update customers set FirstName="'+FirstName+'", EmailID="'+EmailID+'",loginType="FB",ProfileImage="'+ProfileImage+'",fuserid="'+fuserid+'" ,step_status=2 where ContactNo="'+ContactNo+'"',function(err,rows){
 
 if(err){
         res.json({status:400,message:err})
