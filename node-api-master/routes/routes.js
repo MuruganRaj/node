@@ -415,6 +415,29 @@ if(rows.length>0){
 
 
 
+app.get('/api/v1/getLiveUser',function(req,res){
+       
+			var query = pool.query("select FirstName,ProfileImage,fuserid from  customers where loginType='FB' order by CustomerID desc limit 1;", function(err,rows){
+
+if(err){
+        console.log("err"+err);
+
+}else{
+        if(rows.length>0){
+                res.send({"response":rows})
+        }else{
+                res.send({"response":"No Data Found"});
+        }
+}
+});
+
+
+
+
+});
+
+
+
 
 app.get('/api/v1/login',ensureToken,function(req,res){
 
