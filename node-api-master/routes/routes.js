@@ -512,7 +512,36 @@ if(err){
 });
 });
 
+app.get('/api/v1/getDummyUser',ensureToken,function(req,res){
+        jwt.verify(req.token,'molc',function(err,data){
+		
+		var customer_id = req.query.customer_id;
 
+if(err){
+ res.send(403);
+
+}else{
+			var query = pool.query("SELECT Fname FROM dummy_user ORDER BY rand() LIMIT 1", function(err,rows){
+
+if(err){
+        console.log("err"+err);
+
+}else{
+        if(rows.length>0){
+                res.send({"response":rows})
+        }else{
+                res.send({"response":"No Data Found"});
+        }
+}
+});
+
+}
+
+});
+
+
+
+});
 
 app.post('/api/v1/addUserByMobile',ensureToken,function(req,res){
 
