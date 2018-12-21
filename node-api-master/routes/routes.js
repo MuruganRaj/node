@@ -1112,7 +1112,12 @@ var sCategoryId = req.query.sCategoryId;
 
         connection.release();
         if(!err){
-            res.json({code:1,message:rows[0]});
+          if(rows[0].length>0){
+		     res.json({code:1,message:rows[0]});
+
+			}else{
+				 res.json({code:1,message:"No data found"});
+			}
         }else{
             data["error"]=1;
             data["users"]="not added";
