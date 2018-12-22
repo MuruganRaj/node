@@ -457,7 +457,7 @@ res.send({"response":"No data found"});
       });
 
                 }else {
-                if(MobileidPattern.test(input)){
+               // if(MobileidPattern.test(input)){
                          pool.query('SELECT * FROM customers where ContactNo ="'+input+'" ', (error, result) => {
            if (error) throw error;
 
@@ -469,7 +469,7 @@ res.send({"response":"No Data Found"});
 
       });
                                                                }
-}
+//}
 
 });
 
