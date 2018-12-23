@@ -444,7 +444,7 @@ var input = req.query.input;
        let MobileidPattern = /^([0|\+[0-9]{1,5})?([7-9][0-9]{9})$/;
 
 
-                if (MailidsPattern.test(input)) {
+                if (input.toString().length>10) {
                          pool.query('SELECT * FROM customers where fuserid ="'+input+'" ', (error, result) => {
            if (error) throw error;
 if(result.length>0){
@@ -479,7 +479,7 @@ var input = req.query.input;
        let MobileidPattern = /^([0|\+[0-9]{1,5})?([7-9][0-9]{9})$/;
 
 
-                if (input.toString().length>10) {
+                if (MailidsPattern.test(input)) {
                          pool.query('SELECT * FROM customers where EmailID ="'+input+'" ', (error, result) => {
            if (error) throw error;
 if(result.length>0){
