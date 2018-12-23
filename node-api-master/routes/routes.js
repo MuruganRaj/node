@@ -511,6 +511,43 @@ if(err){
 }
 });
 });
+app.get('/api/v2/checkEmail',ensureToken,function(req,res){
+
+var fuserid = req.query.fuserid;
+
+
+jwt.verify(req.token,'molc',function(err,data){
+
+                if(err){
+                        console.log('rrrrrrrr'+err);
+             res.sendStatus(403);
+
+        }else{
+var query = pool.query("select *  from customers where fuserid='"+fuserid+"'",function(err,rows){
+
+if(err){
+
+        res.send({"message":err});
+
+
+}else{
+
+        console.log("rrrrrr"+rows.length);
+        if(rows.length>0){
+                        res.send({"message":true});
+
+        }else{
+                        res.send({"message":false});
+
+        }
+}
+
+
+});
+
+}
+});
+});
 
 app.get('/api/v1/getDummyUser',ensureToken,function(req,res){
         jwt.verify(req.token,'molc',function(err,data){
