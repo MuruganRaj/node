@@ -436,7 +436,39 @@ if(err){
 
 });
 
+app.get('/api/v2/login',ensureToken,function(req,res){
 
+var input = req.query.input;
+
+                let MailidsPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+       let MobileidPattern = /^([0|\+[0-9]{1,5})?([7-9][0-9]{9})$/;
+
+
+                if (MailidsPattern.test(input)) {
+                         pool.query('SELECT * FROM customers where fuserid ="'+input+'" ', (error, result) => {
+           if (error) throw error;
+if(result.length>0){
+          res.send({"response":result});}else{
+res.send({"response":"No data found"});
+          }
+      });
+
+                }else {
+               // if(MobileidPattern.test(input)){
+                         pool.query('SELECT * FROM customers where ContactNo ="'+input+'" ', (error, result) => {
+           if (error) throw error;
+
+                                 if(result.length>0){
+          res.send({"response":result});
+                                 }else{
+res.send({"response":"No Data Found"});
+                                 }
+
+      });
+                                                               }
+//}
+
+});
 
 
 app.get('/api/v1/login',ensureToken,function(req,res){
