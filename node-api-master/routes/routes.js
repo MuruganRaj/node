@@ -1055,9 +1055,42 @@ if(err){
 
 });
 
+});
+	
+	
+	app.get('/api/v1/getSplashImages',ensureToken,function(req,res){
+        jwt.verify(req.token,'molc',function(err,data){
 
+               
+if(err){
+ res.send(403);
+
+}else{
+        var query = pool.query('SELECT imageurl FROM splash_screen where active=1',function(err,rows){
+
+if(err){
+        console.log("err"+err);
+
+}else{
+        if(rows.length>0){
+                res.send({"response":rows
+               })
+        }else{
+                res.send({"response":"No Data Found"});
+        }
+}
+});
+
+}
 
 });
+
+});
+	
+	
+	
+	
+	
 
 app.get('/api/v1/getGroups',ensureToken,function(req,res){
         jwt.verify(req.token,'molc',function(err,data){
