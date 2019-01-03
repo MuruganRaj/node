@@ -435,6 +435,35 @@ if(err){
 
 
 });
+	
+	
+	
+	app.get('/api/v1/getCompitionUsers',function(req,res){
+       
+			var query = pool.query("select  first_name, referal_id, counts from our_customers union all (select b.FirstName as first_name, a.referal_id as referal_id, a.counts as counts from (SELECT  referal_id,  count(referal_id) as counts FROM customers where created_at between DATE_ADD(now(), INTERVAL(1-DAYOFWEEK(now())) DAY) and DATE(NOW() + INTERVAL (7 - DAYOFWEEK(NOW())) DAY) group by referal_id  order by count(referal_id) desc) as a inner join customers as b on (a.referal_Id=b.CustomerID) where b.FirstName is not null) order by counts desc limit 8", function(err,rows){
+
+if(err){
+        console.log("err"+err);
+
+}else{
+        if(rows.length>0){
+                res.send({"response":rows})
+        }else{
+                res.send({"response":"No Data Found"});
+        }
+}
+});
+
+
+
+
+});
+	
+	
+	
+	
+	
+	
 
 app.get('/api/v2/login',ensureToken,function(req,res){
 
