@@ -1311,6 +1311,45 @@ app.get('/api/v1/getOrder_id',function(req,res){
 });
 
 
+	app.get('/api/v1/getCompition',function(req,res){
+   
+    var data={
+        "error":1,
+        "mjm":""
+    };
+
+  
+
+     var connectionCount = 0;
+     connectionFunc();
+  function connectionFunc(){
+   pool.getConnection(function(err,connection){
+    if(connection!=undefined){
+    connection.query("Call sp_challenge()",function(err,rows,fields){
+
+        connection.release();
+        if(!err){
+            res.json({code:1,message:rows[0]});
+        }else{
+            
+            res.json({code:0,message:'No data found'});
+        }
+    })
+  }
+  else{
+    connectionCount++;
+      if(connectionCount<5){
+        connectionFunc();
+      }
+      else{
+        console.log("Mysql connection failed");
+        res.send("Mysql connection failed");
+      }
+  }
+  });
+ }
+});
+
 
 
 
