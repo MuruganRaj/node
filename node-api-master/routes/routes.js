@@ -1313,6 +1313,7 @@ app.get('/api/v1/getOrder_id',function(req,res){
 
 	app.get('/api/v1/getCompition',function(req,res){
    
+		var stype =req.query.stype;
     var data={
         "error":1,
         "mjm":""
@@ -1325,7 +1326,7 @@ app.get('/api/v1/getOrder_id',function(req,res){
   function connectionFunc(){
    pool.getConnection(function(err,connection){
     if(connection!=undefined){
-    connection.query("Call sp_challenge()",function(err,rows,fields){
+    connection.query("Call sp_challenge('"+stype+"')",function(err,rows,fields){
 
         connection.release();
         if(!err){
