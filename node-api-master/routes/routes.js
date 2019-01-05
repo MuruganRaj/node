@@ -674,7 +674,7 @@ if(err){
 }
 
 });
-
+});
 	
 app.post('/api/v1/addUserByMobile',ensureToken,function(req,res){
 
