@@ -641,6 +641,41 @@ if(err){
 
 });
 
+	
+	
+app.post('/api/v1/addcustomersnew',ensureToken,function(req,res){
+        jwt.verify(req.token,'molc',function(err,data){
+		
+		var sLogintype = req.query.sLogintype;
+		var sContactno = req.query.sContactno;
+		var sReferal_id = req.query.sReferal_id;
+		var sStep_status = req.query.sStep_status;
+
+if(err){
+ res.send(403);
+
+}else{
+			var query = pool.query("Call sp_addCustomers('"+sLogintype+"','"+sContactno+"','"+sReferal_id+"','"+sStep_status+"')", function(err,rows){
+
+if(err){
+        console.log("err"+err);
+		res.send({code:0,"response":err.sqlMessage})
+
+}else{
+        if(rows.length>0){
+                res.send({code:1,"response":rows[0]})
+                //data:data})
+        }else{
+                res.send({"response":"No Data Found"});
+        }
+}
+});
+
+}
+
+});
+
+	
 app.post('/api/v1/addUserByMobile',ensureToken,function(req,res){
 
 
