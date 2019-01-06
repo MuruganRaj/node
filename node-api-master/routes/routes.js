@@ -156,6 +156,40 @@ app.post('/file_upload', upload.single('file'), function(req, res) {
 
 	
 	
+	app.get('/api/v1/updateShippingAddr',ensureToken,function(req,res){
+        jwt.verify(req.token,'molc',function(err,data){
+		
+		var sType = req.query.sType;
+		var sCustomerid = req.query.sCustomerid;
+		var sAddress = req.query.sAddress;
+		var sPincode = req.query.sPincode;
+
+if(err){
+ res.send(403);
+
+}else{
+			var query = pool.query("Call spUpdate_shippingAddr('"+sType+"','"+sCustomerid+"','"+sAddress+"','"+sPincode+"')", function(err,rows){
+
+if(err){
+        console.log("err"+err);
+		res.send({code:0,"response":err.sqlMessage})
+
+}else{
+        if(rows.length>0){
+                res.send({code:1,"response":rows[0]})
+                //data:data})
+        }else{
+                res.send({"response":"No Data Found"});
+        }
+}
+});
+
+}
+
+});
+});
+	
+	
 	app.post('/api/v1/login_key',function(req,res){
 const user ={id:1};
 const token = jwt.sign({user},'molc')
