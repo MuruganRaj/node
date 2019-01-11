@@ -27,6 +27,52 @@ const router = app => {
 	var upload = multer({ dest: 'images/'});
 
 
+	//develoment
+	app.post('/apidev/v1/addShippingAddr',ensureToken,function(req,res){
+        jwt.verify(req.token,'molc',function(err,data){
+		
+		var sType = req.query.sType;
+		var sUserid = req.query.sUserid;
+		var sName = req.query.sName;
+		var sContactNo = req.query.sContactNo;
+		var sEmail = req.query.sEmail;
+		var sBuildingNo = req.query.sBuildingNo;
+		var sAddress1 = req.query.sAddress1;
+		var sAddress2 = req.query.sAddress2;
+		var sCity = req.query.sCity;
+		var sPincode = req.query.sPincode;
+		var sLand_mark = req.query.sLand_mark;
+		var sAddressType = req.query.sAddressType;
+		var sState = req.query.sState;
+
+if(err){
+ res.send(403);
+
+}else{
+			var query = pool.query("Call sp_ship_addr('"+sType+"','"+sUserid+"','"+sName+"','"+sContactNo+"','"+sEmail+"','"+sBuildingNo+"','"+sAddress1+"','"+sAddress2+"','"+sCity+"','"+sPincode+"','"+sLand_mark+"','"+sAddressType+"','"+sState+"')", function(err,rows){
+
+if(err){
+        console.log("err"+err);
+		res.send({code:0,"response":err.sqlMessage})
+
+}else{
+        if(rows.length>0){
+                res.send({code:1,"response":rows[0]})
+                //data:data})
+        }else{
+                res.send({"response":"No Data Found"});
+        }
+}
+});
+
+}
+
+});
+});
+	
+	
+	
+	
 app.get('/:filename',function(req,res){
 	var filename = req.params.filename;
 	
