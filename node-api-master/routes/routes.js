@@ -516,7 +516,37 @@ if(err){
 
 });
 	
-	
+	app.get('/api/v1/getGroupCount',ensureToken,function(req,res){
+        jwt.verify(req.token,'molc',function(err,data){
+		
+		
+
+if(err){
+ res.send(403);
+
+}else{
+			var query = pool.query("Call spGroup()", function(err,rows){
+
+if(err){
+        console.log("err"+err);
+
+}else{
+        if(rows.length>0){
+                res.send({"response":rows[0]})
+                //data:data})
+        }else{
+                res.send({"response":"No Data Found"});
+        }
+}
+});
+
+}
+
+});
+
+
+
+});
 	
 	app.get('/api/v1/getCompitionUsers',function(req,res){
        
