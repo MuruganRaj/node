@@ -1951,7 +1951,7 @@ app.get('/api/v1/getJoinUserImages',ensureToken,function(req,res){
 
         }else{
 
-var query = pool.query('select c.CustomerID,c.loginType, c.ProfileImage , c.FirstName,c.LastName,c.EmailID ,c.ContactNo,c.Address1 from join_group j  join customers c on (j.customer_id=c.CustomerID) where group_id="'+group_id+'"',function(err,rows){
+var query = pool.query('select c.CustomerID,c.loginType, c.ProfileImage ,c.fuserid, c.FirstName,c.LastName,c.EmailID ,c.ContactNo,c.Address1 from join_group j  join customers c on (j.customer_id=c.CustomerID) where group_id="'+group_id+'"',function(err,rows){
 
 
    if(err){
