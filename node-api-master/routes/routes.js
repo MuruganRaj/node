@@ -519,13 +519,13 @@ if(err){
 	app.get('/api/v1/getGroupCount',ensureToken,function(req,res){
         jwt.verify(req.token,'molc',function(err,data){
 		
-		
+		var sType=req.query.sType;
 
 if(err){
  res.send(403);
 
 }else{
-			var query = pool.query("Call spGroup()", function(err,rows){
+			var query = pool.query("Call spGroup('"+sType+"')", function(err,rows){
 
 if(err){
         console.log("err"+err);
@@ -547,6 +547,8 @@ if(err){
 
 
 });
+
+
 	
 	app.get('/api/v1/getCompitionUsers',function(req,res){
        
