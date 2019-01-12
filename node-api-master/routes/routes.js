@@ -516,7 +516,7 @@ if(err){
 
 });
 	
-	app.get('/api/v1/getGroupCount',ensureToken,function(req,res){
+	app.get('/api/v1/getGroupTot',ensureToken,function(req,res){
         jwt.verify(req.token,'molc',function(err,data){
 		
 		var sType=req.query.sType;
