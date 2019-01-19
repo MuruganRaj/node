@@ -1854,7 +1854,7 @@ if(err){
         res.send(403);
 
 }else{
-        var query = pool.query('SELECT * from product_temp where supplier_id="'+supplier_id+'"',function(err,rows){
+        var query = pool.query('SELECT * from product_temp where supplier_id="'+supplier_id+'" order by Rand()',function(err,rows){
 
 if(err){
         console.log("err"+err);
@@ -1885,7 +1885,7 @@ if(err){
         res.send(403);
 
 }else{
-        var query = pool.query('SELECT * from product_temp where category_id="'+category_id+'" and subcategory_id ="'+subcategory_id+'" ',function(err,rows){
+        var query = pool.query('SELECT * from product_temp where category_id="'+category_id+'" and subcategory_id ="'+subcategory_id+'" order by Rand() ',function(err,rows){
 
 if(err){
         console.log("err"+err);
