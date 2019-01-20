@@ -70,20 +70,27 @@ if(err){
 });
 });
 	
-	app.get('/api/v1/getSku',function(req,res){
 	
-	var newdata =[];
+app.get('/api/v1/getSku',function(req,res){
+	
+	
+	
+	
+       var newdata =[];
 	var data =[];
 	var specifications=[];
 	var spe=[];
 	var temp2 =[];
 	
 	var cats = [];
-var subcats = [];
+    var subcats = [];
 	
-	var product_id = req.query.product_id;
-	 
-	var query = pool.query('SELECT * FROM molc_test_new.product_sku_new n left join product_spec a on (n.molc_sku_id=a.pro_spec_id) where n.product_id="'+product_id+'"',function(err,rows){
+			
+var  product_id=req.query.product_id;
+			
+			 console.log('rrrrwwwww'+product_id);
+
+	var qer= pool.query("SELECT * FROM product_sku_new n left join product_spec a on (n.molc_sku_id=a.pro_spec_id) where product_id='"+product_id+"'",function(err,rows){
 
    data = JSON.stringify(rows);
 
@@ -132,7 +139,7 @@ categories.forEach((category, i) => {
 	
 		});
 
-			console.log("rrrr"+JSON.stringify(temp1));
+			//console.log("rrrr"+JSON.stringify(temp1));
 							
                 }
         });
@@ -143,11 +150,16 @@ categories.forEach((category, i) => {
 	newdata.push(temp1);
 	
 
-});	
+
+	 });
+	
+	
 res.json(newdata);
 
+});	
+
 });
-});
+
 	
 	
 app.get('/:filename',function(req,res){
