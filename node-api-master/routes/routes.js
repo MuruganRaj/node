@@ -70,7 +70,84 @@ if(err){
 });
 });
 	
+	app.get('/api/v1/getSku',function(req,res){
 	
+	var newdata =[];
+	var data =[];
+	var specifications=[];
+	var spe=[];
+	var temp2 =[];
+	
+	var cats = [];
+var subcats = [];
+	
+	var product_id = req.query.product_id;
+	 
+	var query = pool.query('SELECT * FROM molc_test_new.product_sku_new n left join product_spec a on (n.molc_sku_id=a.pro_spec_id) where n.product_id="'+product_id+'"',function(err,rows){
+
+   data = JSON.stringify(rows);
+
+var categories = [...new Set(rows.map(item => item.molc_sku_id))];
+
+categories.forEach((category, i) => {
+        var temp1 = {};
+        cats[i] = [];
+        rows.forEach(d => {
+                if (d.molc_sku_id === category) {
+                        cats[i].push(d);
+                                      
+													   
+		                    temp1.molc_sku_id = d.molc_sku_id;
+		                    temp1.product_price = d.product_price;
+							temp1.product_MRP=d.product_MRP;
+		                    temp1.product_image = d.product_image;
+		                    temp1.product_quantity = d.product_quantity;
+		                    temp1.product_id = d.product_id;
+		                    temp1.p_sold = d.p_sold;
+		                    temp1.GST = d.GST;
+							
+							
+							
+							var specifications = [...new Set(cats[i].map(item => item.sno))];
+
+        temp1.specifications = [];
+
+        specifications.forEach((sc, j) => {
+                subcats[j] = [];
+                var temp2 = {};
+
+                cats[i].forEach(cat => {
+                        if (cat.sno === sc) {
+                                subcats[j].push(cat);
+                                temp2.sno=cat.so;
+			     temp2.pro_spec_name=cat.pro_spec_name;
+			    temp2.pro_spec_value =cat.pro_spec_value;
+		      temp1.specifications.push(temp2);
+
+
+                        }							
+
+                });
+
+	
+		});
+
+			console.log("rrrr"+JSON.stringify(temp1));
+							
+                }
+        });
+
+        
+
+	
+	newdata.push(temp1);
+	
+
+});	
+res.json(newdata);
+
+});
+});
 	
 	
 app.get('/:filename',function(req,res){
