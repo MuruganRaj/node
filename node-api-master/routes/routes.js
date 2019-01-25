@@ -69,7 +69,101 @@ if(err){
 
 });
 });
+	app.get('/api/v1/getSku_size',function(req,res){
 	
+	
+	
+	
+       var newdata =[];
+	var data =[];
+	var p_size=[];
+	var sizes=[];
+	var spe=[];
+	var temp2 =[];
+	var temp3=[];
+	var temp4=[];
+	
+	var cats = [];
+    var subcats = [];
+	var subcats1 =[];
+			
+var  sku_id=req.query.sku_id;
+			
+			 console.log('rrrrwwwww'+sku_id);
+
+	var qer= pool.query("select * from product_sku_new  ps join product_sku_size pi on(ps.molc_sku_id=pi.sku_id) where sku_id='"+sku_id+"' ",function(err,rows){
+
+   data = JSON.stringify(rows);
+
+var categories = [...new Set(rows.map(item => item.molc_sku_id))];
+
+categories.forEach((category, i) => {
+        var temp1 = {};
+        cats[i] = [];
+        rows.forEach(d => {
+                if (d.molc_sku_id === category) {
+                        cats[i].push(d);
+                                      
+													   
+		                    temp1.molc_sku_id = d.molc_sku_id;
+		                    temp1.produc_price = d.produc_price;
+							temp1.product_id=d.product_id;
+		                   
+							
+							
+							
+							var p_size = [...new Set(cats[i].map(item => item.id))];
+
+        temp1.p_size = [];
+
+        p_size.forEach((sc, j) => {
+                subcats[j] = [];
+                var temp2 = {};
+
+                cats[i].forEach(cat => {
+                        if (cat.id === sc) {
+                                subcats[j].push(cat);
+                                temp2.id=cat.id;
+			     temp2.size=cat.size;
+			    temp2.quantity =cat.quantity;
+			    temp2.price =cat.price;
+
+				temp1.p_size.push(temp2);
+   
+			  	
+						
+
+			  
+
+                        }	
+						
+					
+
+                });
+	
+		});
+
+							
+                }
+        });
+
+        
+
+	
+	newdata.push(temp1);
+	
+
+
+	 });
+	
+	
+res.json(newdata);
+
+});	
+
+});
+
+
 	
 app.get('/api/v1/getSku',function(req,res){
 	
