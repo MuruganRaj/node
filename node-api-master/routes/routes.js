@@ -206,6 +206,7 @@ categories.forEach((category, i) => {
 		                    temp1.product_id = d.product_id;
 		                    temp1.p_sold = d.p_sold;
 		                    temp1.GST = d.GST;
+			            temp1.color=d.color;
 							
 							
 							
