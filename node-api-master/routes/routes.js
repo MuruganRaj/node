@@ -556,6 +556,38 @@ if(err){
 });
 
 	
+app.get('/api/v1/getAllGroups',ensureToken,function(req,res){
+        jwt.verify(req.token,'molc',function(err,data){
+		
+		var product_id = req.query.product_id;
+
+if(err){
+ res.send(403);
+
+}else{
+			var query = pool.query("select * ,ADDTIME(cg.created_date, '24:00:00')  as  expirydate ,timediff('24:00:00',time_format(timediff(current_timestamp(),cg.created_date) ,'%H:%i:%s')) as timecount from Create_group cg join customers cs on (cg.customer_id=cs.CustomerID) where   group_status <> 'InActive' and product_id= '"+product_id+"' order by group_id desc", function(err,rows){
+
+if(err){
+        console.log("err"+err);
+
+}else{
+        if(rows.length>0){
+                res.send({"response":rows,
+                data:data})
+        }else{
+                res.send({"response":"No Data Found",data:data});
+        }
+}
+});
+
+}
+
+});
+
+
+
+});
+
 	
 
 app.get('/api/v1/getPendingRegStatus',ensureToken,function(req,res){
