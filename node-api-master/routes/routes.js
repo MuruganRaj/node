@@ -384,7 +384,39 @@ app.post('/file_upload', upload.single('file'), function(req, res) {
   });
 });
 
-	
+	app.get('/api/v1/startGame',ensureToken,function(req,res){
+        jwt.verify(req.token,'molc',function(err,data){
+		
+		var sType = req.query.sType;
+		var sCatId = req.query.sCatId;
+		var sCustomerid = req.query.sCustomerid;
+
+if(err){
+ res.send(403);
+
+}else{
+			var query = pool.query("Call sp_startGame('"+sType+"','"+sCatId+"','"+sCustomerid+"')", function(err,rows){
+
+if(err){
+        console.log("err"+err);
+
+}else{
+        if(rows.length>0){
+                res.send({"response":rows[0]})
+                //data:data})
+        }else{
+                res.send({"response":"No Data Found"});
+        }
+}
+});
+
+}
+
+});
+
+
+
+});
 	
 	app.get('/api/v1/updateShippingAddr',ensureToken,function(req,res){
         jwt.verify(req.token,'molc',function(err,data){
