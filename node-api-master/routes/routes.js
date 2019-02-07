@@ -184,7 +184,7 @@ var  product_id=req.query.product_id;
 			
 			 console.log('rrrrwwwww'+product_id);
 
-	var qer= pool.query("SELECT * FROM product_sku_new n left join product_spec a on (n.molc_sku_id=a.pro_spec_id) where product_id='"+product_id+"'",function(err,rows){
+	var qer= pool.query("SELECT * FROM product_sku_new n left join product_spec a on (n.molc_sku_id=a.pro_spec_id) where product_id='"+product_id+"' and p_sold =0",function(err,rows){
 
    data = JSON.stringify(rows);
 
@@ -1403,7 +1403,8 @@ var sPaymentStatus = req.query.sPaymentStatus;
 var pSno = req.query.pSno;
 var sSuplier_id = req.query.sSuplier_id;
 var sTransactionId = req.query.sTransactionId;
-
+var sSize = req.query.sSize;
+var sColor = req.query.sColor;
 var data={
         "error":1,
         "mjm":""
@@ -1419,7 +1420,9 @@ var data={
 
 
     connection.query("Call place_orders('"+sCustomer_id+"','"+sPayment_method_code+"','"
-      +sPayment_method_details+"','"+sTotal_price+"','"+sProduct_price+"','"+sOrder_id+"','"+sQuantity+"', '"+sOrderStatus+"','"+sOrderInvoice+"', '"+sProductId+"','"+sMolc_sku_id+"','"+sPaymentStatus+"','"+pSno+"','"+sSuplier_id+"','"+sTransactionId+"')",function(err,rows,fields){
+      +sPayment_method_details+"','"+sTotal_price+"','"+sProduct_price+"','"+sOrder_id+"','"+sQuantity+"', '"
+		     +sOrderStatus+"','"+sOrderInvoice+"', '"+sProductId+"','"+sMolc_sku_id+"','"+sPaymentStatus+"','"
+		     +pSno+"','"+sSuplier_id+"','"+sTransactionId+"','"+sSize+"','"+sColor+"')",function(err,rows,fields){
    
         connection.release();
         if(!err){
