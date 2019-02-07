@@ -9,7 +9,7 @@ var publicDir = require('path').join(__dirname,'/Images');
 app.use(express.static(publicDir));
 
 // Set the port
-const port = 80;
+const port = 3000;
 
 // Use Node.js body parsing middleware
 app.use(bodyParser.json());
