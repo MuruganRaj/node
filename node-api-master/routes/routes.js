@@ -207,7 +207,8 @@ categories.forEach((category, i) => {
 		                    temp1.p_sold = d.p_sold;
 		                    temp1.GST = d.GST;
 			            temp1.color=d.color;
-							
+                                    temp1.sno=d.sno;
+		
 							
 							
 							var specifications = [...new Set(cats[i].map(item => item.sno))];
