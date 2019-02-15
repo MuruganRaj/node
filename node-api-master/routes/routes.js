@@ -184,7 +184,7 @@ var  product_id=req.query.product_id;
 			
 			 console.log('rrrrwwwww'+product_id);
 
-	var qer= pool.query("SELECT * FROM product_sku_new n left join product_spec a on (n.molc_sku_id=a.pro_spec_id) where product_id='"+product_id+"' and p_sold =0",function(err,rows){
+	var qer= pool.query("SELECT  n.sno as psno,a.*,n.* FROM product_sku_new n left join product_spec a on (n.molc_sku_id=a.pro_spec_id) where product_id='"+product_id+"'",function(err,rows){
 
    data = JSON.stringify(rows);
 
@@ -207,7 +207,7 @@ categories.forEach((category, i) => {
 		                    temp1.p_sold = d.p_sold;
 		                    temp1.GST = d.GST;
 			            temp1.color=d.color;
-                                    temp1.sno=d.sno;
+                                    temp1.psno=d.psno;
 		
 							
 							
