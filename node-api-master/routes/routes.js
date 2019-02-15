@@ -184,23 +184,23 @@ var  product_id=req.query.product_id;
 			
 			 console.log('rrrrwwwww'+product_id);
 
-	var qer= pool.query("SELECT  n.sno as psno,a.*,n.* FROM product_sku_new n left join product_spec a on (n.molc_sku_id=a.pro_spec_id) where product_id='"+product_id+"'",function(err,rows){
+	var qer= pool.query("SELECT  n.sno as psno,n.*,a.* FROM product_sku_new n left join product_spec a on (n.molc_sku_id=a.pro_spec_id) where product_id='"+product_id+"'",function(err,rows){
 
    data = JSON.stringify(rows);
 
-var categories = [...new Set(rows.map(item => item.molc_sku_id))];
+var categories = [...new Set(rows.map(item => item.msd))];
 
 categories.forEach((category, i) => {
         var temp1 = {};
         cats[i] = [];
         rows.forEach(d => {
-                if (d.molc_sku_id === category) {
+                if (d.msd === category) {
                         cats[i].push(d);
                                       
 													   
 		                    temp1.molc_sku_id = d.molc_sku_id;
 		                    temp1.product_price = d.product_price;
-							temp1.product_MRP=d.product_MRP;
+				    temp1.product_MRP=d.product_MRP;
 		                    temp1.product_image = d.product_image;
 		                    temp1.product_quantity = d.product_quantity;
 		                    temp1.product_id = d.product_id;
