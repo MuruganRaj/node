@@ -4,7 +4,7 @@ const mysql = require('mysql');
 const config = {
 host:'139.59.57.126',
 user:'root',
-password:'root',
+password:'admin123',
 port:3306,
 database:'molc'
 	
