@@ -1760,7 +1760,7 @@ if(err){
         res.send(403);
 
 }else{
-        var query = pool.query('SELECT * from product_temp where replace(commission_rate,'%','')>=10 limit 20',function(err,rows){
+        var query = pool.query('SELECT * from product_temp limit 20',function(err,rows){
 
 if(err){
         console.log("err"+err);
