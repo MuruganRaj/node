@@ -1896,7 +1896,7 @@ app.get('/api/v1/getProductList',function(req,res){
 //              res.send(403);
 
 //         }else{
-var query = pool.query("SELECT * FROM product_temp where replace(commission_rate,'%','')>=10  ORDER BY RAND()  limit 20",function(err,rows){
+var query = pool.query("SELECT * FROM product_temp where SUBSTRING_INDEX(commission_rate, '%', 1)>=10  ORDER BY RAND()  limit 20",function(err,rows){
 
    if(err){
 console.log("error"+err);
