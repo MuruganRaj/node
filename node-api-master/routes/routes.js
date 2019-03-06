@@ -797,6 +797,46 @@ if(err){
 
 });
 
+	
+	
+		app.get('/api/v1/addgroup_new',ensureToken,function(req,res){
+           jwt.verify(req.token,'molc',function(err,data){
+		
+		var sOrderid=req.query.sOrderid;
+		var sProductId =req.query.sProductId;
+		var sCustomerID = req.query.sCustomerID;
+		var sGroupCount = req.query.sGroupCount;
+
+if(err){
+ res.send(403);
+
+}else{
+			var query = pool.query("Call sp_addgroup('"+sOrderid+"','"+sProductId+"','"+sCustomerID+"','"+sGroupCount+"')", function(err,rows){
+
+if(err){
+        console.log("err"+err);
+
+}else{
+        if(rows.length>0){
+                res.send({"response":rows[0]})
+                //data:data})
+        }else{
+                res.send({"response":"No Data Found"});
+        }
+}
+});
+
+}
+
+});
+
+
+
+});
+
+
+
+	
 
 	
 	app.get('/api/v1/getCompitionUsers',function(req,res){
