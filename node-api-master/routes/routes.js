@@ -1936,7 +1936,7 @@ app.get('/api/v1/getProductList',function(req,res){
 //              res.send(403);
 
 //         }else{
-var query = pool.query("select * from product_temp where product_price<=1100 and  SUBSTRING_INDEX(product_discount, '%', 1)>=25 and SUBSTRING_INDEX(commission_rate, '%', 1)>=15 and  date(outofstock_date)>  DATE_FORMAT(now(), "%Y-%m-%d")  order by product_id  ORDER BY RAND()  limit 20",function(err,rows){
+var query = pool.query("select * from product_temp where product_price<=1100 and  SUBSTRING_INDEX(product_discount, '%', 1)>=25 and SUBSTRING_INDEX(commission_rate, '%', 1)>=15 and  date(outofstock_date)>  DATE_FORMAT(now(), "%Y-%m-%d")  order by   RAND()  limit 30",function(err,rows){
 
    if(err){
 console.log("error"+err);
