@@ -1930,14 +1930,14 @@ console.log('resu'+pGroup_id);
 	
 
 //not used
-app.get('/api/v1/getProductList_lat/:start',function(req,res){
+app.get('/api/v1/getProductList_lat',function(req,res){
 
 	let startNum ;
-	if(req.params.start == ''){
+	if(req.body.start == ''){
           startNum = 0;
          }else{
 	   
-	    startNum = parseInt(req.params.start);
+	    startNum = parseInt(req.body.start);
 
    }
  
