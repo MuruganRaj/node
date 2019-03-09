@@ -1926,6 +1926,55 @@ console.log('resu'+pGroup_id);
  }
 });
 
+	
+	
+
+//not used
+app.get('/api/v1/getProductList_lat/:start',function(req,res){
+
+	let startNum ;
+	if(req.params.start == ''){
+          startNum = 0;
+         }else{
+	   
+	    startNum = parseInt(req.params.start);
+
+   }
+ 
+ 
+
+	
+//         jwt.verify(req.token,'molc',function(err,data){
+
+//                 if(err){
+//              res.send(403);
+
+//         }else{
+var query = pool.query("select * from product_temp where product_price<=1100   order by   RAND()  limit 20 offset "+startNum,function(err,rows){
+
+   if(err){
+console.log("error"+err);
+
+}else{
+
+if(rows.length>0){
+        res.send({"response":rows});
+
+}else{
+        res.send({"response":"No Data Found"});
+
+}
+
+}
+
+
+});
+
+	
+
+// }
+});
+
 
 //not used
 app.get('/api/v1/getProductList',function(req,res){
@@ -1936,7 +1985,7 @@ app.get('/api/v1/getProductList',function(req,res){
 //              res.send(403);
 
 //         }else{
-var query = pool.query("select * from product_temp where product_price<=1100   order by   RAND()  limit 30",function(err,rows){
+var query = pool.query("select * from product_temp where product_price<=1100   order by   RAND()  limit 20  ",function(err,rows){
 
    if(err){
 console.log("error"+err);
