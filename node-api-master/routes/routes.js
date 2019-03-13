@@ -1709,6 +1709,56 @@ var sCategoryId = req.query.sCategoryId;
 });
 
 
+	
+	
+	app.get('/api/v1/getProductMoreByType',function(req,res){
+   
+    var data={
+        "error":1,
+        "mjm":""
+    };
+
+  var sType = req.query.sType;
+var sCategoryId = req.query.sCategoryId;
+var sVal = req.query.sVal;
+
+
+     var connectionCount = 0;
+     connectionFunc();
+  function connectionFunc(){
+   pool.getConnection(function(err,connection){
+    if(connection!=undefined){
+    connection.query("Call spGetMoreProduct('"+sType+"','"+sCategoryId+"','"+sVal+"')",function(err,rows,fields){
+
+        connection.release();
+        if(!err){
+          if(rows[0].length>0){
+		     res.json({code:1,message:rows[0]});
+
+			}else{
+				 res.json({code:1,message:"No data found"});
+			}
+        }else{
+            data["error"]=1;
+            data["users"]="not added";
+            res.json({code:0,message:'not added'+err});
+        }
+    })
+  }
+  else{
+    connectionCount++;
+      if(connectionCount<5){
+        connectionFunc();
+      }
+      else{
+        console.log("Mysql connection failed");
+        res.send("Mysql connection failed");
+      }
+  }
+  });
+ }
+});
+
 app.get('/api/v1/getOrder_id',function(req,res){
    
     var data={
