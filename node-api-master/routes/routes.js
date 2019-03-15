@@ -2000,7 +2000,7 @@ app.get('/api/v1/getProductList_lat',function(req,res){
 //              res.send(403);
 
 //         }else{
-var query = pool.query("select * from product_temp where product_price<=1100   order by   RAND()  limit 8 offset "+startNum,function(err,rows){
+var query = pool.query("select * from product_temp where product_price<=1100  and subcategory_name  not like 'sex products'  order by   RAND()  limit 8 offset "+startNum,function(err,rows){
 
    if(err){
 console.log("error"+err);
@@ -2035,7 +2035,7 @@ app.get('/api/v1/getProductList',function(req,res){
 //              res.send(403);
 
 //         }else{
-var query = pool.query("select * from product_temp where product_price<=1100   order by   RAND()  limit 20  ",function(err,rows){
+var query = pool.query("select * from product_temp where product_price<=1100  and subcategory_name  not like'sex products' order by   RAND()  limit 20  ",function(err,rows){
 
    if(err){
 console.log("error"+err);
