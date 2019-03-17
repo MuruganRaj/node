@@ -1192,7 +1192,7 @@ if(err){
 
 
 
-        var query=pool.query('insert into customers(FirstName,EmailID,ContactNo,ProfileImage,fuserid)values("'+FirstName+'","'+EmailID+'","'+ContactNo+'","'+ProfileImage+'","'+fuserid+'")',function(err,rows){
+        var query=pool.query('insert into customers(FirstName,EmailID,ContactNo,ProfileImage,fuserid) values("'+FirstName+'","'+EmailID+'","'+ContactNo+'","'+ProfileImage+'","'+fuserid+'")',function(err,rows){
 
             if(err){
                 res.json({status:400,message:err})
