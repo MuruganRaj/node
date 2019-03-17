@@ -1192,17 +1192,18 @@ if(err){
 
 
 
-        var query=pool.query('update customers set FirstName="'+FirstName+'", EmailID="'+EmailID+'",loginType="FB",ProfileImage="'+ProfileImage+'",fuserid="'+fuserid+'" ,step_status=2 where ContactNo="'+ContactNo+'"',function(err,rows){
+        var query=pool.query('insert into customers(FirstName,EmailID,ContactNo,ProfileImage,fuserid)values("'+FirstName+'","'+EmailID+'","'+ContactNo+'","'+ProfileImage+'","'+fuserid+'")',function(err,rows){
 
-if(err){
-        res.json({status:400,message:err})
-}else{
+            if(err){
+                res.json({status:400,message:err})
+            }else{
 
-        res.json({status:200,message:'User updated successfully.'})
+                res.json({status:200,message:'User updated successfully.'})
 
-}
-});
-});
+            }
+        });
+    });
+
 
 
 const util = require('util');
