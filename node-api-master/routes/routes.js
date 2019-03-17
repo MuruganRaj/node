@@ -664,7 +664,7 @@ app.get('/api/v1/updateFBChallenge',function(req,res){
 
 
 
-        var query=pool.query('insert into customers(FirstName,EmailID,ContactNo,ProfileImage,fuserid) values("'+FirstName+'","'+EmailID+'","'+ContactNo+'","'+ProfileImage+'","'+fuserid+'")',function(err,rows){
+        var query=pool.query('insert into customers(FirstName,EmailID,ContactNo,ProfileImage,fuserid,loginType) values("'+FirstName+'","'+EmailID+'","'+ContactNo+'","'+ProfileImage+'","'+fuserid+'",'FB')',function(err,rows){
 
             if(err){
                 res.json({status:400,message:err})
