@@ -1183,27 +1183,7 @@ if(err){
 	
 	
 
-	app.get('/api/v1/updateFBChallenge',function(req,res){
-		    const FirstName = req.query.FirstName;
-		    const EmailID = req.query.EmailID;
-		    const ContactNo = req.query.ContactNo;
-		   const ProfileImage =req.query.ProfileImage;
-		   const fuserid =req.query.fuserid;
-
-
-
-        var query=pool.query('insert into customers(FirstName,EmailID,ContactNo,ProfileImage,fuserid) values("'+FirstName+'","'+EmailID+'","'+ContactNo+'","'+ProfileImage+'","'+fuserid+'")',function(err,rows){
-
-            if(err){
-                res.json({status:400,message:err})
-            }else{
-
-                res.json({status:200,message:'User updated successfully.'})
-
-            }
-        });
-    });
-
+	
 
 
 const util = require('util');
