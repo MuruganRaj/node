@@ -855,6 +855,81 @@ if(err){
 });
 
 
+	
+	
+		app.get('/api/v1/addPayment',ensureToken,function(req,res){
+           jwt.verify(req.token,'molc',function(err,data){
+		
+		var sType=req.query.sType;
+		var sUser_id =req.query.sUser_id;
+		var sProduct_id = req.query.sProduct_id;
+		var sOrderId = req.query.sOrderId;
+		var sPayment_id = req.query.sPayment_id;
+
+
+if(err){
+ res.send(403);
+
+}else{
+			var query = pool.query("Call sp_Paymentgroup('"+sType+"','"+sUser_id+"','"+sProduct_id+"','"+sOrderId+"','"+sPayment_id+"')", function(err,rows){
+
+if(err){
+        console.log("err"+err);
+
+}else{
+        if(rows.length>0){
+                res.send({"response":rows[0]})
+                //data:data})
+        }else{
+                res.send({"response":"No Data Found"});
+        }
+}
+});
+
+}
+
+});
+
+
+
+});
+
+
+	app.get('/api/v1/getAll_Groups',ensureToken,function(req,res){
+           jwt.verify(req.token,'molc',function(err,data){
+		
+		var sType=req.query.sType;
+		
+
+
+if(err){
+ res.send(403);
+
+}else{
+			var query = pool.query("Call getAllGroups('"+sType+"')", function(err,rows){
+
+if(err){
+        console.log("err"+err);
+
+}else{
+        if(rows.length>0){
+                res.send({"response":rows[0]})
+                //data:data})
+        }else{
+                res.send({"response":"No Data Found"});
+        }
+}
+});
+
+}
+
+});
+
+
+
+});
+
+
 
 	
 
