@@ -899,14 +899,15 @@ if(err){
            jwt.verify(req.token,'molc',function(err,data){
 		
 		var sType=req.query.sType;
-		
+		var sUserID=req.query.sUserID;
+
 
 
 if(err){
  res.send(403);
 
 }else{
-			var query = pool.query("Call getAllGroups('"+sType+"')", function(err,rows){
+			var query = pool.query("Call getAllGroups('"+sType+"','"+sUserID+"')", function(err,rows){
 
 if(err){
         console.log("err"+err);
