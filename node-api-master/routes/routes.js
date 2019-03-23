@@ -274,6 +274,61 @@ app.get('/:filename',function(req,res){
         }
     });
 });
+	
+	
+
+app.get('/api/v1/getWishlist',function(req,res){
+   
+    var data={
+        "error":1,
+        "mjm":""
+    };
+
+  var sType = req.query.sType;
+var sCustomer_id = req.query.sCustomer_id;
+var sProduct_id = req.query.sProduct_id;
+var sCategory_id = req.query.sCategory_id;
+var sSubcat_id = req.query.sSubcat_id;
+
+
+
+     var connectionCount = 0;
+     connectionFunc();
+  function connectionFunc(){
+   pool.getConnection(function(err,connection){
+    if(connection!=undefined){
+    connection.query("Call sp_wishlist('"+sType+"','"+sCustomer_id+"','"+sProduct_id+"','"+sCategory_id+"','"+sSubcat_id+"')",function(err,rows,fields){
+
+        connection.release();
+        if(!err){
+          if(rows[0].length>0){
+		     res.json({code:1,message:rows[0]});
+
+			}else{
+				 res.json({code:1,message:"No data found"});
+			}
+        }else{
+            data["error"]=1;
+            data["users"]="not added";
+            res.json({code:0,message:'not added'+err});
+        }
+    })
+  }
+  else{
+    connectionCount++;
+      if(connectionCount<5){
+        connectionFunc();
+      }
+      else{
+        console.log("Mysql connection failed");
+        res.send("Mysql connection failed");
+      }
+  }
+  });
+ }
+});	
+	
+	
 app.post('/api/v1/updateProfile',upload.single('file'),function(req,res){
    
    var file = __dirname + '/' + req.file.filename+".jpg";
