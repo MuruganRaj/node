@@ -39,7 +39,7 @@ if(!error&&response.statusCode==200){
 	}
 	});	
 		
-},15000);
+},3600000);
 	
 	
     // Display all users
