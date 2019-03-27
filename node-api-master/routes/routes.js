@@ -3,6 +3,8 @@ var jwt   = require('jsonwebtoken');
 var fs=require('fs');
 const path =require('path');
 var multer = require('multer');
+var https = require('https');
+const request = require('request');
 
 // Route the app
 const router = app => {
@@ -11,6 +13,35 @@ const router = app => {
         response.send({message: 'Welcome to the Node.js Express REST API!'});
     });
 
+	var requestloop = setInterval(function(){
+	request({
+		url:"https://free.currencyconverterapi.com/api/v5/convert?q=USD_INR,USD_SGD&compact=y&apiKey=c65036fc2d797bca9799",
+		method:"GET",
+		timeout:1000,
+		followRedirect:true,
+		maxRedirect:10
+	},function(error,response,body){
+if(!error&&response.statusCode==200){
+	console.log(body);
+	
+	var result = JSON.parse(body);
+		console.log(result.USD_INR.val);
+		  //  var datetime = new Date();
+
+		var query = pool.query("update  currency_usd set currency_inr="+result.USD_INR.val+",currency_sgd="+result.USD_SGD.val+" where id=1",function(err,rows){
+			
+			if(err){
+				console.log("resssss"+err);
+			}
+		});
+	
+	
+	}
+	});	
+		
+},15000);
+	
+	
     // Display all users
     app.get('/users', (request, response) => {
 		
