@@ -6,6 +6,8 @@ var multer = require('multer');
 var https = require('https');
 const request = require('request');
 var nodemailer = require('nodemailer');
+var smtpTransport = require('nodemailer-smtp-transport');
+
 
 // Route the app
 const router = app => {
