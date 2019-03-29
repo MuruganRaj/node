@@ -5,6 +5,7 @@ const path =require('path');
 var multer = require('multer');
 var https = require('https');
 const request = require('request');
+var nodemailer = require('nodemailer');
 
 // Route the app
 const router = app => {
@@ -13,6 +14,38 @@ const router = app => {
         response.send({message: 'Welcome to the Node.js Express REST API!'});
     });
 
+	app.post('/send-email', function (req, res) {
+      let transporter = nodemailer.createTransport(smtpTransport({
+          host: 'smtp.gmail.com',
+		  port:587,
+          secure: false,
+		  tls: { rejectUnauthorized: false },
+          auth: {
+              user: 'molc.noreply@gmail.com',
+              pass: 'molc1234'
+          }
+      }));
+      let mailOptions = {
+          from: 'molc.noreply@gmail.com', // sender address
+          to: req.body.to, // list of receivers
+          subject: req.body.subject, // Subject line
+          text: req.body.body // plain text body
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+              return  res.send({"result":err});
+		  		  
+
+          }
+		  
+		  res.send({"result":info.messageId});
+          //console.log('Message %s sent: %s', info.messageId, info.response);
+              //res.render('index');
+			  transporter.close();
+          });
+      });
+	
 	var requestloop = setInterval(function(){
 	request({
 		url:"https://free.currencyconverterapi.com/api/v5/convert?q=USD_INR,USD_SGD&compact=y&apiKey=c65036fc2d797bca9799",
