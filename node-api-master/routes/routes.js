@@ -1854,10 +1854,44 @@ if(err){
 
 });
 
+});
 
+app.get('/api/v1/addBankDetails',ensureToken,function(req,res){
+        jwt.verify(req.token,'molc',function(err,data){
+		
+		var sType = req.query.sType;
+		var sCustomerId = req.query.sCustomerId;
+		var sIFscCode = req.query.sIFscCode;
+		var sBankName = req.query.sBankName;
+		var sAccountNo = req.query.sAccountNo;
+		var sCity = req.query.sCity;
+		var sContactNo = req.query.sContactNo;
+		var sAccountHolderName = req.query.sAccountHolderName;
+
+if(err){
+ res.send(403);
+
+}else{
+			var query = pool.query("Call sp_bankDetails('"+sType+"','"+sCustomerId+"','"+sIFscCode+"','"+sBankName+"','"+sAccountNo+"','"+sCity+"','"+sContactNo+"','"+sAccountHolderName+"')", function(err,rows){
+
+if(err){
+        console.log("err"+err);
+
+}else{
+        if(rows.length>0){
+                res.send({"response":rows[0]})
+                //data:data})
+        }else{
+                res.send({"response":"No Data Found"});
+        }
+}
+});
+
+}
 
 });
 
+});
 
 
 
