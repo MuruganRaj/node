@@ -2,11 +2,11 @@ const mysql = require('mysql');
 //.us-east-2.rds.amazonaws.com
 // Set database connection credentials
 const config = {
-host:'142.93.208.174',
+host:'',
 user:'root',
-password:'!admin123',
+password:'admin123',
 port:3306,
-database:'molc_test'
+database:'molc'
 	
 };
 
